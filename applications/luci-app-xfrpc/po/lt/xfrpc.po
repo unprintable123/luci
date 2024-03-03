@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"PO-Revision-Date: 2024-01-08 01:06+0000\n"
+"PO-Revision-Date: 2024-02-02 12:51+0000\n"
 "Last-Translator: Džiugas J <dziugas1959@hotmail.com>\n"
 "Language-Team: Lithuanian <https://hosted.weblate.org/projects/openwrt/"
 "luciapplicationsxfrpc/lt/>\n"
@@ -28,7 +28,7 @@ msgstr "Numatytai, ši reikšmė yra – „0.0.0.0“."
 
 #: applications/luci-app-xfrpc/htdocs/luci-static/resources/view/xfrpc.js:97
 msgid "By default, this value is \"Info\"."
-msgstr "Numatytai, ši reikšmė yra – „Informacija“."
+msgstr "Numatytai, ši reikšmė yra – „Info“."
 
 #: applications/luci-app-xfrpc/htdocs/luci-static/resources/view/xfrpc.js:129
 msgid "By default, this value is \"tcp\"."
@@ -88,12 +88,12 @@ msgstr "Jeigu „remote_port“ yra 0, tada „frps“ priskirs atsitiktinį pri
 
 #: applications/luci-app-xfrpc/htdocs/luci-static/resources/view/xfrpc.js:99
 msgid "Info"
-msgstr "Info"
+msgstr "Informacija"
 
 #: applications/luci-app-xfrpc/htdocs/luci-static/resources/view/xfrpc.js:124
 #: applications/luci-app-xfrpc/htdocs/luci-static/resources/view/xfrpc.js:135
 msgid "Local IP"
-msgstr "Vietinis „IP“"
+msgstr "Vietinis IP"
 
 #: applications/luci-app-xfrpc/htdocs/luci-static/resources/view/xfrpc.js:125
 #: applications/luci-app-xfrpc/htdocs/luci-static/resources/view/xfrpc.js:140
@@ -103,7 +103,7 @@ msgstr "Vietinis prievadas"
 #: applications/luci-app-xfrpc/htdocs/luci-static/resources/view/xfrpc.js:136
 msgid "LocalIp specifies the IP address or host name to proxy to."
 msgstr ""
-"„LocalIp“ nurodo esamą „IP“ adresą arba skleidėjo/p.k – vedėjo pavadinimą į "
+"„LocalIp“ nurodo esamą IP adresą arba skleidėjo/p.k – vedėjo pavadinimą į "
 "kurį įgaliotai pereiti."
 
 #: applications/luci-app-xfrpc/htdocs/luci-static/resources/view/xfrpc.js:141

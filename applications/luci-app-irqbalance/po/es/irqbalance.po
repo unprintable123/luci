@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"PO-Revision-Date: 2024-01-03 19:46+0000\n"
+"PO-Revision-Date: 2024-02-05 02:27+0000\n"
 "Last-Translator: Franco Castillo <castillofrancodamian@gmail.com>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/openwrt/"
 "luciapplicationsirqbalance/es/>\n"
@@ -22,7 +22,7 @@ msgstr "Caché más profunda"
 
 #: applications/luci-app-irqbalance/htdocs/luci-static/resources/view/irqbalance.js:78
 msgid "Enable"
-msgstr ""
+msgstr "Activar"
 
 #: applications/luci-app-irqbalance/htdocs/luci-static/resources/view/irqbalance.js:92
 msgid "Exclude CPUs"

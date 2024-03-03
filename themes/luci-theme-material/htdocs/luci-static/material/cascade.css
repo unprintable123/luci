@@ -1601,7 +1601,8 @@ body:not(.Interfaces) .cbi-rowstyle-2:first-child {
 	background: #b0d0f0;
 }
 
-.cbi-dropdown[open] > ul.dropdown > li.focus {
+.cbi-dropdown[open] > ul.dropdown > li.focus,
+.cbi-dropdown[open] > ul.dropdown > li:hover {
 	background: linear-gradient(90deg, #a3c2e8 0%, #84aad9 100%);
 }
 
@@ -1889,6 +1890,11 @@ td > .ifacebadge,
 	margin: .5em .25em 0 .25em;
 	padding: .5em;
 	background-color: #fff;
+}
+
+#dsl_status_table .ifacebox-body span > strong {
+	display: inline-block;
+	min-width: 50%;
 }
 
 /* textarea */
