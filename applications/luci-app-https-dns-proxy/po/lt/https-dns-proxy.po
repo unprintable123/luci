@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"PO-Revision-Date: 2024-02-23 21:10+0000\n"
+"PO-Revision-Date: 2024-04-30 03:55+0000\n"
 "Last-Translator: Džiugas J <dziugas1959@hotmail.com>\n"
 "Language-Team: Lithuanian <https://hosted.weblate.org/projects/openwrt/"
 "luciapplicationshttps-dns-proxy/lt/>\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && ("
 "n%100<10 || n%100>=20) ? 1 : 2);\n"
-"X-Generator: Weblate 5.5-dev\n"
+"X-Generator: Weblate 5.5.2\n"
 
 #: applications/luci-app-https-dns-proxy/htdocs/luci-static/resources/https-dns-proxy/status.js:258
 msgid "%s%s%s proxy at %s on port %s.%s"
@@ -143,6 +143,10 @@ msgstr ""
 msgid "DeCloudUs DNS"
 msgstr "„DeCloudUs DNS“"
 
+#: applications/luci-app-https-dns-proxy/root/usr/share/https-dns-proxy/providers/com.adguard.dns.json:14
+msgid "Default (Blocks ads and trackers)"
+msgstr ""
+
 #: applications/luci-app-https-dns-proxy/root/usr/share/https-dns-proxy/providers/ch.digitale-gesellschaft.dns.json:2
 msgid "Digitale Gesellschaft (CH)"
 msgstr "„Digitale Gesellschaft (CH)“"
@@ -184,7 +188,7 @@ msgid "FFMUC DNS (DE)"
 msgstr "„FFMUC DNS (DE)“"
 
 #: applications/luci-app-https-dns-proxy/root/usr/share/https-dns-proxy/providers/ca.cira.canadianshield.json:14
-#: applications/luci-app-https-dns-proxy/root/usr/share/https-dns-proxy/providers/com.adguard.dns.json:14
+#: applications/luci-app-https-dns-proxy/root/usr/share/https-dns-proxy/providers/com.adguard.dns.json:22
 #: applications/luci-app-https-dns-proxy/root/usr/share/https-dns-proxy/providers/com.cloudflare-dns.json:14
 #: applications/luci-app-https-dns-proxy/root/usr/share/https-dns-proxy/providers/com.controld.freedns.json:14
 #: applications/luci-app-https-dns-proxy/root/usr/share/https-dns-proxy/providers/com.opendns.doh.json:14
@@ -194,7 +198,7 @@ msgstr "Šeimos filtras"
 
 #: applications/luci-app-https-dns-proxy/root/usr/share/https-dns-proxy/providers/org.cleanbrowsing.doh.json:8
 msgid "Filter"
-msgstr "Filtruoti"
+msgstr "Filtras/Filtruoti"
 
 #: applications/luci-app-https-dns-proxy/root/usr/share/https-dns-proxy/providers/com.ahadns.blitz.json:8
 #: applications/luci-app-https-dns-proxy/root/usr/share/https-dns-proxy/providers/com.rethinkdns.sky.json:8
@@ -332,7 +336,7 @@ msgstr ""
 #: applications/luci-app-https-dns-proxy/htdocs/luci-static/resources/view/https-dns-proxy/overview.js:361
 #: applications/luci-app-https-dns-proxy/htdocs/luci-static/resources/view/status/include/71_https-dns-proxy.js:101
 msgid "Listen Port"
-msgstr ""
+msgstr "Laukti (-iama/-s) prisijungimo/jungties ryšio prievadui"
 
 #: applications/luci-app-https-dns-proxy/root/usr/share/https-dns-proxy/providers/com.blahdns.doh.json:8
 #: applications/luci-app-https-dns-proxy/root/usr/share/https-dns-proxy/providers/net.ahadns.doh.json:8
@@ -517,7 +521,6 @@ msgid "Spain"
 msgstr "Ispanija"
 
 #: applications/luci-app-https-dns-proxy/root/usr/share/https-dns-proxy/providers/co.oszx.dns.json:18
-#: applications/luci-app-https-dns-proxy/root/usr/share/https-dns-proxy/providers/com.adguard.dns.json:18
 #: applications/luci-app-https-dns-proxy/root/usr/share/https-dns-proxy/providers/com.cloudflare-dns.json:18
 #: applications/luci-app-https-dns-proxy/root/usr/share/https-dns-proxy/providers/com.controld.freedns.json:18
 #: applications/luci-app-https-dns-proxy/root/usr/share/https-dns-proxy/providers/com.opendns.doh.json:18
@@ -551,7 +554,7 @@ msgstr ""
 msgid "Switzerland"
 msgstr "Šveicarija"
 
-#: applications/luci-app-https-dns-proxy/htdocs/luci-static/resources/view/status/include/71_https-dns-proxy.js:148
+#: applications/luci-app-https-dns-proxy/htdocs/luci-static/resources/view/status/include/71_https-dns-proxy.js:149
 msgid "There are no active instances."
 msgstr "Nėra aktyvių egzempliorių."
 
@@ -571,9 +574,13 @@ msgstr ""
 msgid "US/New York"
 msgstr ""
 
+#: applications/luci-app-https-dns-proxy/root/usr/share/https-dns-proxy/providers/com.adguard.dns.json:18
+msgid "Unfiltered"
+msgstr ""
+
 #: applications/luci-app-https-dns-proxy/htdocs/luci-static/resources/view/https-dns-proxy/overview.js:245
 msgid "Unknown"
-msgstr "Nežinomas"
+msgstr "Nežinoma/-s/-i"
 
 #: applications/luci-app-https-dns-proxy/root/usr/share/https-dns-proxy/providers/net.quad9.json:22
 msgid "Unsecured"

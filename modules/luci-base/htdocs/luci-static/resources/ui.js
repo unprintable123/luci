@@ -222,7 +222,7 @@ var UIElement = baseclass.extend(/** @lends LuCI.ui.AbstractElement.prototype */
 	},
 
 	/**
-	 * Setup listeners for native DOM events that may update the widget value.
+	 * Set up listeners for native DOM events that may update the widget value.
 	 *
 	 * Sets up event handlers on the given target DOM node for the given event
 	 * names which may cause the input value to update, such as `keyup` or
@@ -265,7 +265,7 @@ var UIElement = baseclass.extend(/** @lends LuCI.ui.AbstractElement.prototype */
 	},
 
 	/**
-	 * Setup listeners for native DOM events that may change the widget value.
+	 * Set up listeners for native DOM events that may change the widget value.
 	 *
 	 * Sets up event handlers on the given target DOM node for the given event
 	 * names which may cause the input value to change completely, such as
@@ -292,7 +292,7 @@ var UIElement = baseclass.extend(/** @lends LuCI.ui.AbstractElement.prototype */
 	},
 
 	/**
-	 * Render the widget, setup event listeners and return resulting markup.
+	 * Render the widget, set up event listeners and return resulting markup.
 	 *
 	 * @instance
 	 * @memberof LuCI.ui.AbstractElement
@@ -2613,6 +2613,9 @@ var UIFileUpload = UIElement.extend(/** @lends LuCI.ui.FileUpload.prototype */ {
 	 * @typedef {LuCI.ui.AbstractElement.InitOptions} InitOptions
 	 * @memberof LuCI.ui.FileUpload
 	 *
+	 * @property {boolean} [browser=false]
+	 * Use a file browser mode.
+	 *
 	 * @property {boolean} [show_hidden=false]
 	 * Specifies whether hidden files should be displayed when browsing remote
 	 * files. Note that this is not a security feature, hidden files are always
@@ -2633,6 +2636,9 @@ var UIFileUpload = UIElement.extend(/** @lends LuCI.ui.FileUpload.prototype */ {
 	 * remotely depends on the ACL setup for the current session. This option
 	 * merely controls whether the file remove controls are rendered or not.
 	 *
+	 * @property {boolean} [enable_download=false]
+	 * Specifies whether the widget allows the user to download files.
+	 *
 	 * @property {string} [root_directory=/etc/luci-uploads]
 	 * Specifies the remote directory the upload and file browsing actions take
 	 * place in. Browsing to directories outside the root directory is
@@ -2643,9 +2649,11 @@ var UIFileUpload = UIElement.extend(/** @lends LuCI.ui.FileUpload.prototype */ {
 	__init__: function(value, options) {
 		this.value = value;
 		this.options = Object.assign({
+			browser: false,
 			show_hidden: false,
 			enable_upload: true,
 			enable_remove: true,
+			enable_download: false,
 			root_directory: '/etc/luci-uploads'
 		}, options);
 	},
@@ -2664,7 +2672,7 @@ var UIFileUpload = UIElement.extend(/** @lends LuCI.ui.FileUpload.prototype */ {
 
 	/** @override */
 	render: function() {
-		return L.resolveDefault(this.value != null ? fs.stat(this.value) : null).then(L.bind(function(stat) {
+		var renderFileBrowser = L.resolveDefault(this.value != null ? fs.stat(this.value) : null).then(L.bind(function(stat) {
 			var label;
 
 			if (L.isObject(stat) && stat.type != 'directory')
@@ -2676,13 +2684,13 @@ var UIFileUpload = UIElement.extend(/** @lends LuCI.ui.FileUpload.prototype */ {
 				label = [ this.iconForType('file'), ' %s (%s)'.format(this.truncatePath(this.value), _('File not accessible')) ];
 			else
 				label = [ _('Select file…') ];
-
-			return this.bind(E('div', { 'id': this.options.id }, [
-				E('button', {
-					'class': 'btn',
-					'click': UI.prototype.createHandlerFn(this, 'handleFileBrowser'),
-					'disabled': this.options.disabled ? '' : null
-				}, label),
+			let btnOpenFileBrowser = E('button', {
+				'class': 'btn open-file-browser',
+				'click': UI.prototype.createHandlerFn(this, 'handleFileBrowser'),
+				'disabled': this.options.disabled ? '' : null
+			}, label);
+			var fileBrowserEl = E('div', { 'id': this.options.id }, [
+				btnOpenFileBrowser,
 				E('div', {
 					'class': 'cbi-filebrowser'
 				}),
@@ -2691,8 +2699,18 @@ var UIFileUpload = UIElement.extend(/** @lends LuCI.ui.FileUpload.prototype */ {
 					'name': this.options.name,
 					'value': this.value
 				})
-			]));
+			]);
+			return this.bind(fileBrowserEl);
 		}, this));
+		// in a browser mode open dir listing after render by clicking on a Select button
+		if (this.options.browser) {
+			return renderFileBrowser.then(function (fileBrowserEl) {
+				var btnOpenFileBrowser = fileBrowserEl.getElementsByClassName('open-file-browser').item(0);
+				btnOpenFileBrowser.click();
+				return fileBrowserEl;
+			});
+		}
+		return renderFileBrowser
 	},
 
 	/** @private */
@@ -2917,6 +2935,10 @@ var UIFileUpload = UIElement.extend(/** @lends LuCI.ui.FileUpload.prototype */ {
 						'class': 'btn',
 						'click': UI.prototype.createHandlerFn(this, 'handleReset')
 					}, [ _('Deselect') ]) : '',
+					this.options.enable_download && list[i].type == 'file' ? E('button', {
+						'class': 'btn',
+						'click': UI.prototype.createHandlerFn(this, 'handleDownload', entrypath, list[i])
+					}, [ _('Download') ]) : '',
 					this.options.enable_remove ? E('button', {
 						'class': 'btn cbi-button-negative',
 						'click': UI.prototype.createHandlerFn(this, 'handleDelete', entrypath, list[i])
@@ -2947,11 +2969,11 @@ var UIFileUpload = UIElement.extend(/** @lends LuCI.ui.FileUpload.prototype */ {
 			rows,
 			E('div', { 'class': 'right' }, [
 				this.renderUpload(path, list),
-				E('a', {
+				!this.options.browser ? E('a', {
 					'href': '#',
 					'class': 'btn',
 					'click': UI.prototype.createHandlerFn(this, 'handleCancel')
-				}, _('Cancel'))
+				}, _('Cancel')) : ''
 			]),
 		]);
 	},
@@ -2981,6 +3003,22 @@ var UIFileUpload = UIElement.extend(/** @lends LuCI.ui.FileUpload.prototype */ {
 	},
 
 	/** @private */
+	handleDownload: function(path, fileStat, ev) {
+		fs.read_direct(path, 'blob').then(function (blob) {
+			var url = window.URL.createObjectURL(blob);
+			var a = document.createElement('a');
+			a.style.display = 'none';
+			a.href = url;
+			a.download = fileStat.name;
+			document.body.appendChild(a);
+			a.click();
+			window.URL.revokeObjectURL(url);
+		}).catch(function(err) {
+			alert(_('Download failed: %s').format(err.message));
+		});
+	},
+
+	/** @private */
 	handleSelect: function(path, fileStat, ev) {
 		var browser = dom.parent(ev.target, '.cbi-filebrowser'),
 		    ul = browser.querySelector('ul');
@@ -2989,7 +3027,7 @@ var UIFileUpload = UIElement.extend(/** @lends LuCI.ui.FileUpload.prototype */ {
 			dom.content(ul, E('em', { 'class': 'spinning' }, _('Loading directory contents…')));
 			L.resolveDefault(fs.list(path), []).then(L.bind(this.renderListing, this, browser, path));
 		}
-		else {
+		else if (!this.options.browser) {
 			var button = this.node.firstElementChild,
 			    hidden = this.node.lastElementChild;
 
@@ -3506,7 +3544,7 @@ var UI = baseclass.extend(/** @lends LuCI.ui.prototype */ {
 		tooltipDiv = document.body.appendChild(
 			dom.create('div', { class: 'cbi-tooltip' }));
 
-		/* setup old aliases */
+		/* set up old aliases */
 		L.showModal = this.showModal;
 		L.hideModal = this.hideModal;
 		L.showTooltip = this.showTooltip;
@@ -3577,7 +3615,7 @@ var UI = baseclass.extend(/** @lends LuCI.ui.prototype */ {
 	 * behaviour. It has no effect if no modal dialog is currently open.
 	 *
 	 * Note that this function is stand-alone, it does not rely on `this` and
-	 * will not invoke other class functions so it suitable to be used as event
+	 * will not invoke other class functions so it is suitable to be used as event
 	 * handler as-is without the need to bind it first.
 	 */
 	hideModal: function() {
@@ -4554,7 +4592,7 @@ var UI = baseclass.extend(/** @lends LuCI.ui.prototype */ {
 					E('p', _('Failed to confirm apply within %ds, waiting for rollback…')
 						.format(L.env.apply_rollback)));
 
-				var call = function(r, data, duration) {
+				var call = function(r) {
 					if (r.status === 204) {
 						UI.prototype.changes.displayStatus('warning', [
 							E('h4', _('Configuration changes have been rolled back!')),
@@ -4578,13 +4616,13 @@ var UI = baseclass.extend(/** @lends LuCI.ui.prototype */ {
 						return;
 					}
 
-					var delay = isNaN(duration) ? 0 : Math.max(1000 - duration, 0);
+					var delay = isNaN(r.duration) ? 0 : Math.max(1000 - r.duration, 0);
 					window.setTimeout(function() {
 						request.request(L.url('admin/uci/confirm'), {
 							method: 'post',
 							timeout: L.env.apply_timeout * 1000,
 							query: { sid: L.env.sessionid, token: L.env.token }
-						}).then(call, call.bind(null, { status: 0 }, null, 0));
+						}).then(call, call.bind(null, { status: 0, duration: 0 }));
 					}, delay);
 				};
 
@@ -4608,13 +4646,13 @@ var UI = baseclass.extend(/** @lends LuCI.ui.prototype */ {
 			if (override_token)
 				this.confirm_auth = { token: override_token };
 
-			var call = function(r, data, duration) {
+			var call = function(r) {
 				if (Date.now() >= deadline) {
 					window.clearTimeout(tt);
 					UI.prototype.changes.rollback(checked);
 					return;
 				}
-				else if (r && (r.status === 200 || r.status === 204)) {
+				else if (r.status === 200 || r.status === 204) {
 					document.dispatchEvent(new CustomEvent('uci-applied'));
 
 					UI.prototype.changes.setIndicator(0);
@@ -4630,13 +4668,13 @@ var UI = baseclass.extend(/** @lends LuCI.ui.prototype */ {
 					return;
 				}
 
-				var delay = isNaN(duration) ? 0 : Math.max(1000 - duration, 0);
+				var delay = isNaN(r.duration) ? 0 : Math.max(1000 - r.duration, 0);
 				window.setTimeout(function() {
 					request.request(L.url('admin/uci/confirm'), {
 						method: 'post',
 						timeout: L.env.apply_timeout * 1000,
 						query: UI.prototype.changes.confirm_auth
-					}).then(call, call);
+					}).then(call, call.bind(null, { status: 0, duration: 0 }));
 				}, delay);
 			};
 
@@ -4657,7 +4695,7 @@ var UI = baseclass.extend(/** @lends LuCI.ui.prototype */ {
 			tick();
 
 			/* wait a few seconds for the settings to become effective */
-			window.setTimeout(call, Math.max(L.env.apply_holdoff * 1000 - ((ts + L.env.apply_rollback * 1000) - deadline), 1));
+			window.setTimeout(call.bind(null, { status: 0 }), L.env.apply_holdoff * 1000);
 		},
 
 		/**

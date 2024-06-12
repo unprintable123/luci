@@ -6,7 +6,7 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=luci-app-passwall
-PKG_VERSION:=4.75-3
+PKG_VERSION:=4.77-5
 PKG_RELEASE:=
 
 PKG_CONFIG_DEPENDS:= \
@@ -76,25 +76,25 @@ config PACKAGE_$(PKG_NAME)_INCLUDE_NaiveProxy
 
 config PACKAGE_$(PKG_NAME)_INCLUDE_Shadowsocks_Libev_Client
 	bool "Include Shadowsocks Libev Client"
-	default y
+	default n
 
 config PACKAGE_$(PKG_NAME)_INCLUDE_Shadowsocks_Libev_Server
 	bool "Include Shadowsocks Libev Server"
-	default y if aarch64||arm||i386||x86_64
+	default n
 
 config PACKAGE_$(PKG_NAME)_INCLUDE_Shadowsocks_Rust_Client
 	bool "Include Shadowsocks Rust Client"
 	depends on aarch64||arm||i386||mips||mipsel||x86_64
-	default y if aarch64
+	default y
 
 config PACKAGE_$(PKG_NAME)_INCLUDE_Shadowsocks_Rust_Server
 	bool "Include Shadowsocks Rust Server"
 	depends on aarch64||arm||i386||mips||mipsel||x86_64
-	default n
+	default y if aarch64||arm||i386||x86_64
 
 config PACKAGE_$(PKG_NAME)_INCLUDE_ShadowsocksR_Libev_Client
 	bool "Include ShadowsocksR Libev Client"
-	default y
+	default n
 
 config PACKAGE_$(PKG_NAME)_INCLUDE_ShadowsocksR_Libev_Server
 	bool "Include ShadowsocksR Libev Server"
@@ -148,6 +148,7 @@ define Package/$(PKG_NAME)/conffiles
 /usr/share/passwall/rules/lanlist_ipv4
 /usr/share/passwall/rules/lanlist_ipv6
 /usr/share/passwall/rules/domains_excluded
+/www/luci-static/resources/qrcode.min.js
 endef
 
 include ../../luci.mk

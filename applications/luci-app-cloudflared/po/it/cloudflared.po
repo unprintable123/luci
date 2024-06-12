@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"PO-Revision-Date: 2024-02-09 17:28+0000\n"
+"PO-Revision-Date: 2024-04-22 22:21+0000\n"
 "Last-Translator: Random <random-r@users.noreply.hosted.weblate.org>\n"
 "Language-Team: Italian <https://hosted.weblate.org/projects/openwrt/"
 "luciapplicationscloudflared/it/>\n"
@@ -10,15 +10,15 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.4-dev\n"
+"X-Generator: Weblate 5.5-dev\n"
 
 #: applications/luci-app-cloudflared/htdocs/luci-static/resources/view/cloudflared/log.js:89
 msgid "All"
-msgstr ""
+msgstr "tutti"
 
 #: applications/luci-app-cloudflared/htdocs/luci-static/resources/view/cloudflared/config.js:77
 msgid "Certificate of Origin"
-msgstr ""
+msgstr "Certificato d'origine"
 
 #: applications/luci-app-cloudflared/htdocs/luci-static/resources/view/cloudflared/config.js:40
 msgid ""
@@ -76,7 +76,7 @@ msgstr ""
 
 #: applications/luci-app-cloudflared/htdocs/luci-static/resources/view/cloudflared/config.js:59
 msgid "Enable"
-msgstr ""
+msgstr "Abilitare"
 
 #: applications/luci-app-cloudflared/htdocs/luci-static/resources/view/cloudflared/config.js:94
 #: applications/luci-app-cloudflared/htdocs/luci-static/resources/view/cloudflared/log.js:92
@@ -119,7 +119,7 @@ msgstr ""
 
 #: applications/luci-app-cloudflared/htdocs/luci-static/resources/view/cloudflared/tunnels.js:51
 msgid "Name"
-msgstr ""
+msgstr "Nome"
 
 #: applications/luci-app-cloudflared/htdocs/luci-static/resources/view/cloudflared/tunnels.js:85
 msgid "No connections"
@@ -199,7 +199,7 @@ msgstr ""
 
 #: applications/luci-app-cloudflared/htdocs/luci-static/resources/view/cloudflared/log.js:91
 msgid "Warn"
-msgstr ""
+msgstr "Avvisa"
 
 #: applications/luci-app-cloudflared/htdocs/luci-static/resources/view/cloudflared/config.js:95
 msgid "Warning"
